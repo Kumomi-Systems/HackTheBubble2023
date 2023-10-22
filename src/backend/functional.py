@@ -27,12 +27,17 @@ def checkOverlap(tupBox,tupPlayer,widthBox = 1,widthPlayer = 1):
 
 
 def randomAction(fileName):
+    """
+    actions for enemies
+    returns action to be made
+    support for adding more enemies in future    
+    """
+
+
     with open(fileName,"r") as file1:
         listActions = file1.readlines()
         numActions = len(listActions)
-        numIndex = ranint(0,numActions-1)
+        numIndex = randint(0,numActions-1)
 
     return listActions[numIndex]
 
-#temp
-randomAction("Karen_Insults.txt")
