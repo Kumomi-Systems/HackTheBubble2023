@@ -41,3 +41,8 @@ def randomAction(fileName):
 
     return listActions[numIndex]
 
+def characterDeath(health):
+    pass
+def characterDamage(playerCoord, bulletCoord):
+    if playerCoord == bulletCoord:
+        pass
