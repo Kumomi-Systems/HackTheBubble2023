@@ -94,7 +94,7 @@ while True:
         playeranim = (playeranim == False)
     
 
-    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISTED, Square.BORDER, 1]:
+    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
         playerPos = newPos
     
     screen.fill((0, 0, 0))
@@ -102,7 +102,7 @@ while True:
     for y in range(dispH):
         for x in range(dispW):
             pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
-            if a[y][x] in [Square.WALL, Square.WALL_VISTED, Square.BORDER, 1]:
+            if a[y][x] in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
                 screen.blit(wall, pos)
             if a[y][x] in [Square.FLOOR, 0]:
                 screen.blit(floor, pos)
