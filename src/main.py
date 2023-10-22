@@ -120,6 +120,9 @@ endTime = startTime + 5
 
 
 while True:
+    if(health <= 0):
+        state = 2
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -146,64 +149,40 @@ while True:
             playeranim = (playeranim == False)
             blindnessturns -= 1
             invertedMoves -= 1
+            diceroll = 0
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
-            elif(doDamageNextTurn):
-                health -= 1
-                doDamageNextTurn = False
-            elif(invertControlsNextTurn):
-                inverted = -1
-                invertedMoves = 5
-                invertControlsNextTurn = False
         if pressed_keys[K_RIGHT] and canMove:
             newPos = (playerPos[0], playerPos[1] + (1*inverted) )
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
             invertedMoves -= 1
+            diceroll = 0
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
-            elif(doDamageNextTurn):
-                health -= 1
-                doDamageNextTurn = False
-            elif(invertControlsNextTurn):
-                inverted = -1
-                invertedMoves = 5
-                invertControlsNextTurn = False
         if pressed_keys[K_UP] and canMove:
             newPos = (playerPos[0] - (1*inverted), playerPos[1])
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
             invertedMoves -= 1
+            diceroll = 0
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
-            elif(doDamageNextTurn):
-                health -= 1
-                doDamageNextTurn = False
-            elif(invertControlsNextTurn):
-                inverted = -1
-                invertedMoves = 5
-                invertControlsNextTurn = False
         if pressed_keys[K_DOWN] and canMove:
             newPos = (playerPos[0] + (1*inverted), playerPos[1])
             timeOfLast = time.time()  
             playeranim = (playeranim == False)
             blindnessturns -= 1
             invertedMoves -= 1
+            diceroll = 0
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
-            elif(doDamageNextTurn):
-                health -= 1
-                doDamageNextTurn = False
-            elif(invertControlsNextTurn):
-                inverted = -1
-                invertedMoves = 5
-                invertControlsNextTurn = False
         
 
         if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
@@ -212,18 +191,32 @@ while True:
         if a[playerPos[0]][playerPos[1]] == Square.LIFE:
             upHealthNextTurn = True
         elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
-            diceroll = random.randint(1,4)
-            if(diceroll == 1):
-                blindnessturns = 5
-            elif(diceroll == 2):
-                invertControlsNextTurn = True
-                
-            elif(diceroll == 4):
-                doDamageNextturn = True
-            elif(diceroll == 3):
-                #terror
-                # playsound("assets/Scary.mp3")
-                pass
+            if(diceroll == 0):
+                diceroll = random.randint(1,7)
+                if(diceroll == 1):
+                    blindnessturns = random.randint(3,7)
+                elif(diceroll == 2):
+                        inverted = -1
+                        invertedMoves = 5
+                        invertControlsNextTurn = False
+                elif(diceroll >= 3):
+                    health -= random.randint(1,3)
+                # elif(diceroll == 3):
+                #     #terror
+                #     # playsound("assets/Scary.mp3")
+                #     pass
+
+                # if(upHealthNextTurn):
+                #     health += 1
+                #     upHealthNextTurn = False
+                # elif(doDamageNextTurn):
+                #     health -= random.randint(1,3)
+                #     doDamageNextTurn = False
+                # elif(invertControlsNextTurn):
+                #     inverted = -1
+                #     invertedMoves = 5
+                #     invertControlsNextTurn = False
+
 
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
