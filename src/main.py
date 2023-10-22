@@ -4,6 +4,7 @@ from backend.backend import Square
 import time
 import random
 from backend.button import Button
+from playsound import playsound
 
 from pygame.locals import (
 
@@ -196,6 +197,10 @@ while True:
                 pass
             elif(diceroll == 4):
                 doDamageNextturn = True
+            elif(diceroll == 3):
+                #terror
+                playsound("/../assets/Scary.mp3")
+
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
