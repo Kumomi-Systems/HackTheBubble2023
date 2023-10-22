@@ -1,7 +1,6 @@
 import pygame, sys
 from backend.maze import GenerateMaze
 from backend.backend import Square
-from backend.enemies import Goblin, Karen
 import time
 import random
 
@@ -50,19 +49,23 @@ pygame.display.set_caption("AMAZEingly Scary Maze")
 wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
 exit = pygame.image.load("assets/Exit.png").convert()
-life = pygame.image.load("assets/Heart.png").convert()
+life = pygame.image.load("assets/Heart.png").convert_alpha()
 chest = pygame.image.load("assets/Chest.png").convert()
-# trap = pygame.image.load("assets/Floor.png").convert()
+trap = pygame.image.load("assets/Trap.png").convert()
 player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
 player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
 vignette = pygame.image.load("assets/Vignette.png").convert_alpha()
-karen = pygame.image.load("assets/karen.png").convert()
+#karen = pygame.image.load("assets/karen.png").convert()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
 player1 = pygame.transform.scale(player1, (squareSize, squareSize))
 player2 = pygame.transform.scale(player2, (squareSize, squareSize))
 vignette = pygame.transform.scale(vignette, (pixW, pixH))
-karen = pygame.transform.scale(karen, (squareSize, squareSize))
+#karen = pygame.transform.scale(karen, (squareSize, squareSize))
+exit = pygame.transform.scale(exit, (squareSize, squareSize))
+life = pygame.transform.scale(life, (squareSize, squareSize))
+trap = pygame.transform.scale(trap, (squareSize, squareSize))
+
 playeranim = True
 
 
@@ -71,9 +74,9 @@ newPos = (1,1)
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
-bullets = []
-enemies = []
-
+#bullets = []
+#enemies = []
+s = """
 karencount = 30
 for i in range(karencount):
     found = False
@@ -94,7 +97,7 @@ for i in range(goblincount):
         if a[y][x] in [Square.FLOOR, 0]:
             found = True
     g =  Goblin([y,x])
-    #Add to enemies list
+    #Add to enemies list"""
 
 
 
@@ -144,7 +147,7 @@ while True:
 
     if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
         playerPos = newPos
-
+    s = """
     if playeranim != prevplayeranim:
         for enemy in enemies:
             if enemy.name == "G":
@@ -155,7 +158,7 @@ while True:
             bullet.timestep()
             pos = bullet.coordOverlap
             if a[pos[0]][pos[1]]:
-                pass
+                pass"""
 
     screen.fill((0, 0, 0))
 
@@ -169,15 +172,17 @@ while True:
             elif a[y][x] == Square.EXIT:
                 screen.blit(exit, pos)
             elif a[y][x] == Square.LIFE:
+                screen.blit(floor, pos)
                 screen.blit(life, pos)
             elif a[y][x] == Square.TRAP:
-                pass
+                screen.blit(trap, pos)
 
             if (y,x) == playerPos:
                 if playeranim:
                     screen.blit(player1, pos)
                 else:
                     screen.blit(player2, pos)
+    s = """
     for enemy in enemies:
         pos = enemy.coord
         x = pos[1]
@@ -186,7 +191,7 @@ while True:
         if enemy.name == "G":
             screen.blit(goblin, pos)
     for bullet in bullets:
-        screen.blit(goblin, pos)
+        screen.blit(goblin, pos)"""
             
 
             
