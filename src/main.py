@@ -76,6 +76,7 @@ deathscreen = pygame.image.load("assets/deathScreen.png").convert()
 playeranim = True
 
 state = 1
+inverted = False
 
 playB = Button(playButton, (320,500))
 
@@ -193,7 +194,7 @@ while True:
             if(diceroll == 1):
                 blindnessturns = 5
             elif(diceroll == 2):
-                # inv controls
+                newControls = [K_DOWN, K_UP, K_LEFT,K_RIGHT]
                 pass
             elif(diceroll == 4):
                 doDamageNextturn = True
