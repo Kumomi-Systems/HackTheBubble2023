@@ -190,8 +190,6 @@ while True:
                     screen.blit(life, pos)
                 elif a[y][x] == Square.TRAP:
                     screen.blit(trap, pos)
-                    diceroll = random.randint(1,4)
-                    blindnessturns = 5
 
                 if (y,x) == playerPos:
                     if playeranim:
@@ -215,7 +213,7 @@ while True:
         screen.blit(vignette, (0,0))
         if(blindnessturns > 0):
             screen.fill(pygame.Color(100, 0, 0, 255))
-            blindessturns -= 1
+            blindnessturns -= 1
         pygame.display.flip()
 
     elif state == 1:
