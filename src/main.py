@@ -2,6 +2,7 @@ import pygame, sys
 from backend.maze import GenerateMaze
 from backend.backend import Square
 import time
+import random
 
 from pygame.locals import (
 
@@ -47,7 +48,7 @@ wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
 player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
 player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
-vignette = pygame.image.load("assets/vignette3.png").convert_alpha()
+vignette = pygame.image.load("assets/Vignette.png").convert_alpha()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
 player1 = pygame.transform.scale(player1, (squareSize, squareSize))
@@ -62,11 +63,47 @@ timeOfLast = 0
 timeGap = 0.2
 canMove = True
 
+enemies = []
+
+karencount = 30
+for i in range(karencount):
+    found = False
+    while not found:
+        x = random.randrange(dispW)
+        y = random.randrange(dispH)
+        if a[y][x] in [Square.FLOOR, 0]:
+            found = True
+    #Make karen object
+    #Add to enemies list
+
+goblincount = 30
+for i in range(goblincount):
+    found = False
+    while not found:
+        x = random.randrange(dispW)
+        y = random.randrange(dispH)
+        if a[y][x] in [Square.FLOOR, 0]:
+            found = True
+    #Make goblin object
+    #Add to enemies list
+
+
+
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                timeOfLast = 0
+            if event.key == pygame.K_DOWN:
+                timeOfLast = 0
+            if event.key == pygame.K_RIGHT:
+                timeOfLast = 0
+            if event.key == pygame.K_LEFT:
+                timeOfLast = 0
             
 
     
@@ -77,7 +114,7 @@ while True:
     else:
         canMove = False
     pressed_keys = pygame.key.get_pressed()
-
+    prevplayeranim = playeranim
     if pressed_keys[K_LEFT] and canMove:
         newPos = (playerPos[0], playerPos[1] - 1)
         timeOfLast = time.time()
@@ -98,6 +135,10 @@ while True:
 
     if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
         playerPos = newPos
+
+    if playeranim == prevplayeranim:
+        for enemy in enemies:
+            pass    
     
     screen.fill((0, 0, 0))
 
@@ -113,6 +154,9 @@ while True:
                     screen.blit(player1, pos)
                 else:
                     screen.blit(player2, pos)
+            for enemy in enemies:
+                pass
+                #Draw enemy
             
     
     screen.blit(vignette, (0,0))
