@@ -20,8 +20,8 @@ class Karen:
         else:
             pass
     
-    def shout(self):
-        print(functional.randomAction('Karen_Insults.txt'))
+    def shout(self,fileName):
+        print(functional.randomAction(fileName))
 
     def moveKaren(self,varChange,varAxis):
         """
