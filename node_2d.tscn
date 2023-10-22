@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://cw1kbr7dephiy"]
-
-[node name="Node2D" type="Node2D"]
-
-[node name="WOWZERS" type="Node2D" parent="."]
-
-[node name="HELLO THERE" type="Node2D" parent="."]
