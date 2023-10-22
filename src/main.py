@@ -135,29 +135,33 @@ while True:
             newPos = (playerPos[0], playerPos[1] - 1)
             timeOfLast = time.time()
             playeranim = (playeranim == False)
+            blindnessturns -= 1
         if pressed_keys[K_RIGHT] and canMove:
             newPos = (playerPos[0], playerPos[1] + 1)
             timeOfLast = time.time()
             playeranim = (playeranim == False)
+            blindnessturns -= 1
         if pressed_keys[K_UP] and canMove:
             newPos = (playerPos[0] - 1, playerPos[1])
             timeOfLast = time.time()
             playeranim = (playeranim == False)
+            blindnessturns -= 1
         if pressed_keys[K_DOWN] and canMove:
             newPos = (playerPos[0] + 1, playerPos[1])
             timeOfLast = time.time()  
             playeranim = (playeranim == False)
+            blindnessturns -= 1
         
 
         if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
             playerPos = newPos
 
         if a[playerPos[0]][playerPos[1]] == Square.LIFE:
-            pass
+            health += 1
             # add health
         elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
-            pass
-            # run trap
+            diceroll = random.randint(1,4)
+            blindnessturns = 5
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
@@ -212,8 +216,9 @@ while True:
         
         screen.blit(vignette, (0,0))
         if(blindnessturns > 0):
-            screen.fill(pygame.Color(100, 0, 0, 255))
-            blindnessturns -= 1
+            screen.fill(pygame.Color(100, 0, 0, 50))
+
+        print(blindnessturns, health)
         pygame.display.flip()
 
     elif state == 1:
