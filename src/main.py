@@ -76,7 +76,7 @@ deathscreen = pygame.image.load("assets/deathScreen.png").convert()
 playeranim = True
 
 state = 1
-inverted = False
+inverted = 1
 
 playB = Button(playButton, (320,500))
 
@@ -114,7 +114,8 @@ for i in range(goblincount):
     g =  Goblin([y,x])
     #Add to enemies list"""
 
-
+startTime=time.time()
+endTime = startTime + 5
 
 
 while True:
@@ -139,10 +140,11 @@ while True:
             canMove = False
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[K_LEFT] and canMove:
-            newPos = (playerPos[0], playerPos[1] - 1)
+            newPos = (playerPos[0], playerPos[1] - (1*inverted))
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            invertedMoves -= 1
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
@@ -150,10 +152,11 @@ while True:
                 health -= 1
                 doDamageNextTurn = False
         if pressed_keys[K_RIGHT] and canMove:
-            newPos = (playerPos[0], playerPos[1] + 1)
+            newPos = (playerPos[0], playerPos[1] + (1*inverted) )
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            invertedMoves -= 1
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
@@ -161,10 +164,11 @@ while True:
                 health -= 1
                 doDamageNextTurn = False
         if pressed_keys[K_UP] and canMove:
-            newPos = (playerPos[0] - 1, playerPos[1])
+            newPos = (playerPos[0] - (1*inverted), playerPos[1])
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            invertedMoves -= 1
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
@@ -172,10 +176,11 @@ while True:
                 health -= 1
                 doDamageNextTurn = False
         if pressed_keys[K_DOWN] and canMove:
-            newPos = (playerPos[0] + 1, playerPos[1])
+            newPos = (playerPos[0] + (1*inverted), playerPos[1])
             timeOfLast = time.time()  
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            invertedMoves -= 1
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
@@ -194,8 +199,9 @@ while True:
             if(diceroll == 1):
                 blindnessturns = 5
             elif(diceroll == 2):
-                newControls = [K_DOWN, K_UP, K_LEFT,K_RIGHT]
-                pass
+                inverted = -1
+                invertedMoves = 5
+                
             elif(diceroll == 4):
                 doDamageNextturn = True
             elif(diceroll == 3):
@@ -220,7 +226,7 @@ while True:
                     pass"""
 
         screen.fill((0, 0, 0))
-
+        
         for y in range(dispH):
             for x in range(dispW):
                 pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
@@ -258,6 +264,8 @@ while True:
         screen.blit(vignette, (0,0))
         if(blindnessturns > 0):
             screen.fill(pygame.Color(100, 0, 0, 50))
+        if(invertedMoves <= 0):
+            inverted = 1
 
         print(blindnessturns, health)
         pygame.display.flip()
