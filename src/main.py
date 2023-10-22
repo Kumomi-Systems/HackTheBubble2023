@@ -153,7 +153,7 @@ while True:
                 enemy.timestep(a, health, playerPos)    
         for bullet in bullets:
             bullet.timestep()
-            pos = bullet.coord
+            pos = bullet.coordOverlap
             if a[pos[0]][pos[1]]:
                 pass
 

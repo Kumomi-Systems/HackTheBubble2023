@@ -1,5 +1,6 @@
 from backend.backend import Square, Direction
 from random import choice as rchoice
+from random import randint
 from time import sleep
 
 MAZE_HEIGHT = 15
@@ -60,7 +61,14 @@ def Wilson():
 
         if(type(ret) == list):
             for coord in ret:
-                Maze[coord[0]][coord[1]] = Square.FLOOR
+                diceroll = randint(1, 60)
+                if(diceroll%20 == 0):
+                    squaretype = Square.TRAP
+                elif(diceroll%30 == 0):
+                    squaretype = Square.LIFE
+                else:
+                    squaretype = Square.FLOOR
+                Maze[coord[0]][coord[1]] = squaretype
         
         Points = GetPoints()
 
