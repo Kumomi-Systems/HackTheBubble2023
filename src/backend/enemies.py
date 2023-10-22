@@ -1,7 +1,7 @@
 import sys
 import time
 import random
-from backend import Square
+from backend.backend import Square
 class Karen:
     isFollowing = False
     def __init__(self, listCoord):

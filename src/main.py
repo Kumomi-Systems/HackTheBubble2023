@@ -1,7 +1,7 @@
 import pygame, sys
 from backend.maze import GenerateMaze
 from backend.backend import Square
-import backend.enemies
+from backend.enemies import Goblin, Karen
 import time
 import random
 
