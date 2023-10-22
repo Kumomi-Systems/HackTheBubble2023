@@ -1,4 +1,10 @@
-import pygame
+#import pygame
+from sys import path as p
+from random import randint
+import os
+
+path = os.path.abspath("assets")
+p.append(path)
 
 def checkOverlap(tupBox,tupPlayer,widthBox = 1,widthPlayer = 1):
     """
@@ -7,13 +13,26 @@ def checkOverlap(tupBox,tupPlayer,widthBox = 1,widthPlayer = 1):
     tupPlayer is centre of Player 
     """
 
-    if '''check rBox against lPlay''' tupPlayer[0]-(widthPlayer/2)'''lPlayer''' < tupBox[0]+(widthBox/2)'''rBox''':
+    if tupPlayer[0]-(widthPlayer/2) < tupBox[0]+(widthBox/2):
         return True
-    elif '''check lBox against rPlay''' tupBox[0]-(widthBox/2)'''lBox''' < tupPlayer[0]+(widthPlayer/2)'''rPlay''':
+    elif tupBox[0]-(widthBox/2) < tupPlayer[0]+(widthPlayer/2):
         return True
-    elif '''tBox against bPlay''' tupBox[1]+(widthPlayer/2)'''tBox''' > tupPlayer[1]-(widthPlayer/2)'''bPlay''':
+    elif tupBox[1]+(widthPlayer/2) > tupPlayer[1]-(widthPlayer/2):
         return True
-    elif '''bBox against tPlay''' tupBox[1]-(widthBox/2)'''bBox''' < tupPlayer[1]+(widthPlayer/2)'''tPlay''':
+    elif tupBox[1]-(widthBox/2) < tupPlayer[1]+(widthPlayer/2):
         return True
     else:
         return False
+
+
+
+def randomAction(fileName):
+    with open(fileName,"r") as file1:
+        listActions = file1.readlines()
+        numActions = len(listActions)
+        numIndex = ranint(0,numActions-1)
+
+    return listActions[numIndex]
+
+#temp
+randomAction("Karen_Insults.txt")
