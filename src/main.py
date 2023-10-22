@@ -215,6 +215,9 @@ while True:
         screen.blit(splash, (0,0))
         playB.update(screen)
         #screen.blit(vignette, (0,0))
+        
+        if playB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
+            state = 0
         pygame.display.flip()
 
 
