@@ -25,7 +25,7 @@ pygame.init()
 
 pixW=640
 pixH=640
-a = [[0,0,0,0],[1,1,0,0],[0,1,0,0],[1,0,0,0]]
+a = GenerateMaze()
 
 for y in range(len(a)):
     for x in range(len(a[y])):

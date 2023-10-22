@@ -4,11 +4,22 @@ from time import sleep
 
 MAZE_HEIGHT = 63
 MAZE_WIDTH  = 63
-COORDDELTAS = [
+COORDDELTAS_PARTIAL = [
     (-1, 0),
     ( 0,-1),
     ( 0, 1),
     ( 1, 0)
+]
+COORDDELTAS_FULL = [
+    (-1,-1),
+    (-1, 0),
+    (-1, 1),
+    ( 0,-1),
+    ( 0, 0),
+    ( 0, 1),
+    ( 1,-1),
+    ( 1, 0),
+    ( 1, 1),
 ]
 
 # use iterative randomised Prim's algorithm for maze gen
@@ -17,9 +28,9 @@ Walls = []
 
 def AllocateSquareAsFloor(y, x):
     Maze[y][x] = Square.FLOOR
-    for coorddelta in COORDDELTAS:
+    for coorddelta in COORDDELTAS_PARTIAL:
         try:
-            if(Maze[y+coorddelta[1]][x+coorddelta[0]] in [Square.WALL, Square.WALL_VISITED]):
+            if(Maze[y+coorddelta[1]][x+coorddelta[0]] == Square.WALL):
                 Walls.append((y+coorddelta[1], x+coorddelta[0]))
         except IndexError:
             continue
@@ -36,32 +47,22 @@ def GenerateMaze():
 
     AllocateSquareAsFloor(1,1)
 
+    lastcoords = (0,0)
     while(len(Walls) > 0):
-    # for x in range(30):
         coords = rchoice(Walls)
         adjacentvisits = 0
-        for coorddelta in [
-            (-1,-1),
-            (-1, 0),
-            (-1, 1),
-            ( 0,-1),
-            ( 0, 0),
-            ( 0, 1),
-            ( 1,-1),
-            ( 1, 0),
-            ( 1, 1),
-        ]:
-            if(adjacentvisits > 1):
-                break
-            if(Maze[coords[0]+coorddelta[0]][coords[1]+coorddelta[1]] in [Square.FLOOR, Square.WALL_VISITED]):
+        for coorddelta in COORDDELTAS_PARTIAL:
+            # if(adjacentvisits > 1):
+            #     break
+            if(Maze[coords[0]+coorddelta[0]][coords[1]+coorddelta[1]] in [Square.FLOOR]):
                 adjacentvisits += 1
-            elif(Maze[coords[0]+coorddelta[0]][coords[1]+coorddelta[1]] == Square.WALL):
-                Maze[coords[0]+coorddelta[0]][coords[1]+coorddelta[1]] = Square.WALL_VISITED
             
         if(adjacentvisits == 1):
             AllocateSquareAsFloor(coords[0], coords[1])
         
         Walls.remove(coords)
+        lastcoords = coords
             
-    
+    Maze[lastcoords[0]][lastcoords[1]] = Square.EXIT       
+
     return Maze
