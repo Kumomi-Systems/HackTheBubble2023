@@ -2,8 +2,8 @@ from backend.backend import Square, Direction
 from random import choice as rchoice
 from time import sleep
 
-MAZE_HEIGHT = 63
-MAZE_WIDTH  = 63
+MAZE_HEIGHT = 15
+MAZE_WIDTH  = 15
 COORDDELTAS_CARDINAL = [
     (-1, 0),
     ( 0,-1),

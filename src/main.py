@@ -22,25 +22,21 @@ from pygame.locals import (
     QUIT,
 
 )
-s = """
+#s = """
 pygame.init()
-songs = ["assets/megalovania.wav", "assets/gamejam.wav", "assets/gamejam1.wav"]
-for i in range(0,2):
-    pygame.mixer.music.load(songs[i])
-pygame.mixer.music.play(0)
-pygame.mixer.music.queue(songs[1])
-pygame.mixer.music.queue(songs[2])
-"""
+pygame.mixer.music.load("assets/gameJamCombined.wav")
+pygame.mixer.music.play(-1)
+#"""
 pixW=640
 pixH=640
 a = GenerateMaze()
 
-for y in range(len(a)):
-    for x in range(len(a[y])):
-        if a[y][x] == 0:
-            a[y][x] == Square.FLOOR
-        elif a[y][x] == 1:
-            a[y][x] == Square.WALL
+# for y in range(len(a)):
+#     for x in range(len(a[y])):
+#         if a[y][x] == 0:
+#             a[y][x] == Square.FLOOR
+#         elif a[y][x] == 1:
+#             a[y][x] == Square.WALL
 
 
 #a = GenerateMaze()
@@ -53,6 +49,10 @@ pygame.display.set_caption("AMAZEingly Scary Maze")
 
 wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
+exit = pygame.image.load("assets/Exit.png").convert()
+life = pygame.image.load("assets/Heart.png").convert()
+chest = pygame.image.load("assets/Chest.png").convert()
+# trap = pygame.image.load("assets/Floor.png").convert()
 player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
 player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
 vignette = pygame.image.load("assets/Vignette.png").convert_alpha()
@@ -142,7 +142,7 @@ while True:
         playeranim = (playeranim == False)
     
 
-    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
+    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
         playerPos = newPos
 
     if playeranim != prevplayeranim:
@@ -162,10 +162,17 @@ while True:
     for y in range(dispH):
         for x in range(dispW):
             pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
-            if a[y][x] in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
+            if a[y][x] in [Square.WALL, Square.BORDER]:
                 screen.blit(wall, pos)
-            if a[y][x] in [Square.FLOOR, 0]:
+            elif a[y][x] == Square.FLOOR:
                 screen.blit(floor, pos)
+            elif a[y][x] == Square.EXIT:
+                screen.blit(exit, pos)
+            elif a[y][x] == Square.LIFE:
+                screen.blit(life, pos)
+            elif a[y][x] == Square.TRAP:
+                pass
+
             if (y,x) == playerPos:
                 if playeranim:
                     screen.blit(player1, pos)
