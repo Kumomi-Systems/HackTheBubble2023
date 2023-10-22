@@ -3,6 +3,7 @@ from backend.maze import GenerateMaze
 from backend.backend import Square
 import time
 import random
+from backend.button import Button
 
 from pygame.locals import (
 
@@ -52,9 +53,11 @@ exit = pygame.image.load("assets/Exit.png").convert()
 life = pygame.image.load("assets/Heart.png").convert_alpha()
 chest = pygame.image.load("assets/Chest.png").convert()
 trap = pygame.image.load("assets/Trap.png").convert()
+splash = pygame.image.load("assets/SplashScreen.png").convert()
 player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
 player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
 vignette = pygame.image.load("assets/Vignette.png").convert_alpha()
+playButton = pygame.image.load("assets/play.png").convert_alpha()
 #karen = pygame.image.load("assets/karen.png").convert()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
@@ -68,6 +71,9 @@ trap = pygame.transform.scale(trap, (squareSize, squareSize))
 
 playeranim = True
 
+state = 1
+
+playB = Button(playButton, (320,500))
 
 playerPos = (1,1)
 newPos = (1,1)
@@ -117,97 +123,99 @@ while True:
             if event.key == pygame.K_LEFT:
                 timeOfLast = 0
             
+    if state == 0:
+        if timeOfLast +timeGap < time.time():
+            canMove = True
+        else:
+            canMove = False
+        pressed_keys = pygame.key.get_pressed()
+        if pressed_keys[K_LEFT] and canMove:
+            newPos = (playerPos[0], playerPos[1] - 1)
+            timeOfLast = time.time()
+            playeranim = (playeranim == False)
+        if pressed_keys[K_RIGHT] and canMove:
+            newPos = (playerPos[0], playerPos[1] + 1)
+            timeOfLast = time.time()
+            playeranim = (playeranim == False)
+        if pressed_keys[K_UP] and canMove:
+            newPos = (playerPos[0] - 1, playerPos[1])
+            timeOfLast = time.time()
+            playeranim = (playeranim == False)
+        if pressed_keys[K_DOWN] and canMove:
+            newPos = (playerPos[0] + 1, playerPos[1])
+            timeOfLast = time.time()  
+            playeranim = (playeranim == False)
+        
 
-    
-    
+        if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
+            playerPos = newPos
 
-    if timeOfLast +timeGap < time.time():
-        canMove = True
-    else:
-        canMove = False
-    pressed_keys = pygame.key.get_pressed()
-    prevplayeranim = playeranim
-    if pressed_keys[K_LEFT] and canMove:
-        newPos = (playerPos[0], playerPos[1] - 1)
-        timeOfLast = time.time()
-        playeranim = (playeranim == False)
-    if pressed_keys[K_RIGHT] and canMove:
-        newPos = (playerPos[0], playerPos[1] + 1)
-        timeOfLast = time.time()
-        playeranim = (playeranim == False)
-    if pressed_keys[K_UP] and canMove:
-        newPos = (playerPos[0] - 1, playerPos[1])
-        timeOfLast = time.time()
-        playeranim = (playeranim == False)
-    if pressed_keys[K_DOWN] and canMove:
-        newPos = (playerPos[0] + 1, playerPos[1])
-        timeOfLast = time.time()  
-        playeranim = (playeranim == False)
-    
-
-    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
-        playerPos = newPos
-
-    if a[playerPos[0]][playerPos[1]] == Square.LIFE:
-        pass
-        # add health
-    elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
-        pass
-        # run trap
-    elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
-        a = GenerateMaze()
-        playerPos = (1,1)
-    s = """
-    if playeranim != prevplayeranim:
-        for enemy in enemies:
-            if enemy.name == "G":
-                bullets = enemy.timestep(a, health, playerPos, bullets)    
-            else:
-                enemy.timestep(a, health, playerPos)    
-        for bullet in bullets:
-            bullet.timestep()
-            pos = bullet.coordOverlap
-            if a[pos[0]][pos[1]]:
-                pass"""
-
-    screen.fill((0, 0, 0))
-
-    for y in range(dispH):
-        for x in range(dispW):
-            pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
-            if a[y][x] in [Square.WALL, Square.BORDER]:
-                screen.blit(wall, pos)
-            elif a[y][x] == Square.FLOOR:
-                screen.blit(floor, pos)
-            elif a[y][x] == Square.EXIT:
-                screen.blit(exit, pos)
-            elif a[y][x] == Square.LIFE:
-                screen.blit(floor, pos)
-                screen.blit(life, pos)
-            elif a[y][x] == Square.TRAP:
-                screen.blit(trap, pos)
-
-            if (y,x) == playerPos:
-                if playeranim:
-                    screen.blit(player1, pos)
+        if a[playerPos[0]][playerPos[1]] == Square.LIFE:
+            pass
+            # add health
+        elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
+            pass
+            # run trap
+        elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
+            a = GenerateMaze()
+            playerPos = (1,1)
+        s = """
+        if playeranim != prevplayeranim:
+            for enemy in enemies:
+                if enemy.name == "G":
+                    bullets = enemy.timestep(a, health, playerPos, bullets)    
                 else:
-                    screen.blit(player2, pos)
-    s = """
-    for enemy in enemies:
-        pos = enemy.coord
-        x = pos[1]
-        y = pos[0]
-        pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
-        if enemy.name == "G":
-            screen.blit(goblin, pos)
-    for bullet in bullets:
-        screen.blit(goblin, pos)"""
-            
+                    enemy.timestep(a, health, playerPos)    
+            for bullet in bullets:
+                bullet.timestep()
+                pos = bullet.coordOverlap
+                if a[pos[0]][pos[1]]:
+                    pass"""
 
-            
-    
-    screen.blit(vignette, (0,0))
-    pygame.display.flip()
+        screen.fill((0, 0, 0))
+
+        for y in range(dispH):
+            for x in range(dispW):
+                pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
+                if a[y][x] in [Square.WALL, Square.BORDER]:
+                    screen.blit(wall, pos)
+                elif a[y][x] == Square.FLOOR:
+                    screen.blit(floor, pos)
+                elif a[y][x] == Square.EXIT:
+                    screen.blit(exit, pos)
+                elif a[y][x] == Square.LIFE:
+                    screen.blit(floor, pos)
+                    screen.blit(life, pos)
+                elif a[y][x] == Square.TRAP:
+                    screen.blit(trap, pos)
+
+                if (y,x) == playerPos:
+                    if playeranim:
+                        screen.blit(player1, pos)
+                    else:
+                        screen.blit(player2, pos)
+        s = """
+        for enemy in enemies:
+            pos = enemy.coord
+            x = pos[1]
+            y = pos[0]
+            pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
+            if enemy.name == "G":
+                screen.blit(goblin, pos)
+        for bullet in bullets:
+            screen.blit(goblin, pos)"""
+                
+
+                
+        
+        screen.blit(vignette, (0,0))
+        pygame.display.flip()
+    elif state == 1:
+        screen.fill((0, 0, 0))
+        screen.blit(splash, (0,0))
+        playB.update(screen)
+        #screen.blit(vignette, (0,0))
+        pygame.display.flip()
 
 
 '''
