@@ -165,6 +165,7 @@ while True:
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
+            state = 2
         s = """
         if playeranim != prevplayeranim:
             for enemy in enemies:
