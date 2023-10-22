@@ -10,6 +10,7 @@ class Square(Enum):
     FLOOR       = 0
     WALL        = 1
     WALL_VISTED = 2
+    BORDER      = 3
     EXIT        = 10
     CHEST       = 20
     TRAP        = 30

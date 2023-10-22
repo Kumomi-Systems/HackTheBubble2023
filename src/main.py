@@ -5,7 +5,7 @@ pygame.init()
 pixW=640
 pixH=480
 a = [[0,1,0],[1,1,0],[0,1,0]]
-#a= GenerateMaze()
+a= GenerateMaze()
 dispW=len(a[0])
 dispH=len(a)
 squareSize=min(int(pixW/dispW), int(pixH/dispH))
