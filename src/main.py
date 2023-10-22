@@ -86,6 +86,7 @@ health = 4
 blindnessturns = 0
 upHealthNextTurn = False
 doDamageNextTurn = False
+invertControlsNextTurn = False
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
@@ -151,6 +152,10 @@ while True:
             elif(doDamageNextTurn):
                 health -= 1
                 doDamageNextTurn = False
+            elif(invertControlsNextTurn):
+                inverted = -1
+                invertedMoves = 5
+                invertControlsNextTurn = False
         if pressed_keys[K_RIGHT] and canMove:
             newPos = (playerPos[0], playerPos[1] + (1*inverted) )
             timeOfLast = time.time()
@@ -163,6 +168,10 @@ while True:
             elif(doDamageNextTurn):
                 health -= 1
                 doDamageNextTurn = False
+            elif(invertControlsNextTurn):
+                inverted = -1
+                invertedMoves = 5
+                invertControlsNextTurn = False
         if pressed_keys[K_UP] and canMove:
             newPos = (playerPos[0] - (1*inverted), playerPos[1])
             timeOfLast = time.time()
@@ -175,6 +184,10 @@ while True:
             elif(doDamageNextTurn):
                 health -= 1
                 doDamageNextTurn = False
+            elif(invertControlsNextTurn):
+                inverted = -1
+                invertedMoves = 5
+                invertControlsNextTurn = False
         if pressed_keys[K_DOWN] and canMove:
             newPos = (playerPos[0] + (1*inverted), playerPos[1])
             timeOfLast = time.time()  
@@ -187,6 +200,10 @@ while True:
             elif(doDamageNextTurn):
                 health -= 1
                 doDamageNextTurn = False
+            elif(invertControlsNextTurn):
+                inverted = -1
+                invertedMoves = 5
+                invertControlsNextTurn = False
         
 
         if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
@@ -199,19 +216,19 @@ while True:
             if(diceroll == 1):
                 blindnessturns = 5
             elif(diceroll == 2):
-                inverted = -1
-                invertedMoves = 5
+                invertControlsNextTurn = True
                 
             elif(diceroll == 4):
                 doDamageNextturn = True
             elif(diceroll == 3):
                 #terror
-                playsound("assets/Scary.mp3")
+                # playsound("assets/Scary.mp3")
+                pass
 
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
-            state = 3
+            state = 2
         s = """
         if playeranim != prevplayeranim:
             for enemy in enemies:
@@ -287,19 +304,16 @@ while True:
         
         if playB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
             state = 0
-            playerPos = (1,1)
         pygame.display.flip()
 
     elif state == 3:
-        screen.fill((0,0,0))
+        screen.fill(0,0,0)
         screen.blit(success, (0,0))
         nextB = Button(nextlevel, (320,500))
         nextB.update(screen)
         if nextB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
             state = 0
-            playerPos = (1,1)
         pygame.display.flip()
-        
 
 '''
 changes made for testing
