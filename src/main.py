@@ -72,7 +72,7 @@ exit = pygame.transform.scale(exit, (squareSize, squareSize))
 life = pygame.transform.scale(life, (squareSize, squareSize))
 trap = pygame.transform.scale(trap, (squareSize, squareSize))
 deathscreen = pygame.image.load("assets/deathScreen.png").convert()
-
+invertedMoves=0
 playeranim = True
 
 state = 1
@@ -296,6 +296,7 @@ while True:
         nextB.update(screen)
         if nextB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
             state = 0
+        pygame.display.flip()
 
 '''
 changes made for testing
