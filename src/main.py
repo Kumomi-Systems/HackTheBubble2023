@@ -70,6 +70,7 @@ vignette = pygame.transform.scale(vignette, (pixW, pixH))
 exit = pygame.transform.scale(exit, (squareSize, squareSize))
 life = pygame.transform.scale(life, (squareSize, squareSize))
 trap = pygame.transform.scale(trap, (squareSize, squareSize))
+deathscreen = pygame.image.load("assets/deathScreen.png").convert()
 
 playeranim = True
 
@@ -241,6 +242,15 @@ while True:
         pygame.display.flip()
 
     elif state == 1:
+        screen.fill((0, 0, 0))
+        screen.blit(splash, (0,0))
+        playB.update(screen)
+        #screen.blit(vignette, (0,0))
+        
+        if playB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
+            state = 0
+        pygame.display.flip()
+    elif state == 2:
         screen.fill((0, 0, 0))
         screen.blit(splash, (0,0))
         playB.update(screen)
