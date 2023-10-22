@@ -26,20 +26,33 @@ pygame.init()
 pixW=640
 pixH=480
 a = [[0,0,0,0],[1,1,0,0],[0,1,0,0],[1,0,0,0]]
+
+for y in range(len(a)):
+    for x in range(len(a[y])):
+        if a[y][x] == 0:
+            a[y][x] == Square.FLOOR
+        elif a[y][x] == 1:
+            a[y][x] == Square.WALL
+
+
 #a = GenerateMaze()
 dispW=len(a[0])
 dispH=len(a)
-squareSize=min(int(pixW/dispW), int(pixH/dispH))
+squareSize=30
 
 screen = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("AMAZEingly Scary Maze")
 
 wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
-player = pygame.image.load("assets/Player2_Transparent.png").convert()
+player1 = pygame.image.load("assets/Player1_transparent.png").convert_alpha()
+player2 = pygame.image.load("assets/Player2_Transparent.png").convert_alpha()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
-player = pygame.transform.scale(player, (squareSize, squareSize))
+player1 = pygame.transform.scale(player1, (squareSize, squareSize))
+player2 = pygame.transform.scale(player2, (squareSize, squareSize))
+playeranim = True
+
 
 playerPos = (0,0)
 newPos = (0,0)
@@ -66,33 +79,39 @@ while True:
     if pressed_keys[K_LEFT] and canMove:
         newPos = (playerPos[0], playerPos[1] - 1)
         timeOfLast = time.time()
+        playeranim = (playeranim == False)
     if pressed_keys[K_RIGHT] and canMove:
         newPos = (playerPos[0], playerPos[1] + 1)
         timeOfLast = time.time()
+        playeranim = (playeranim == False)
     if pressed_keys[K_UP] and canMove:
         newPos = (playerPos[0] - 1, playerPos[1])
         timeOfLast = time.time()
+        playeranim = (playeranim == False)
     if pressed_keys[K_DOWN] and canMove:
         newPos = (playerPos[0] + 1, playerPos[1])
         timeOfLast = time.time()  
+        playeranim = (playeranim == False)
+    
 
-    if a[newPos[1]][newPos[0]] not in [1,2,3]:
+    if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISTED, Square.BORDER, 1]:
         playerPos = newPos
     
     screen.fill((0, 0, 0))
 
     for y in range(dispH):
         for x in range(dispW):
-
-            if a[y][x] in [Square.WALL, Square.WALL_VISTED, Square.BORDER]:
-                screen.blit(wall, ((x)*squareSize, (y)*squareSize))
-            if a[y][x] == Square.FLOOR:
-                screen.blit(floor, ((x)*squareSize, (y)*squareSize))
+            pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
+            if a[y][x] in [Square.WALL, Square.WALL_VISTED, Square.BORDER, 1]:
+                screen.blit(wall, pos)
+            if a[y][x] in [Square.FLOOR, 0]:
+                screen.blit(floor, pos)
             if (y,x) == playerPos:
-                screen.blit(player, ((x)*squareSize, (y)*squareSize))
+                if playeranim:
+                    screen.blit(player1, pos)
+                else:
+                    screen.blit(player2, pos)
             
     
     
     pygame.display.flip()
-
-#FRAMETIMING
