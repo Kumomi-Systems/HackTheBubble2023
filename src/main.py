@@ -77,6 +77,8 @@ playB = Button(playButton, (320,500))
 
 playerPos = (1,1)
 newPos = (1,1)
+health = 4
+blindnessturns = 0
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
@@ -188,6 +190,8 @@ while True:
                     screen.blit(life, pos)
                 elif a[y][x] == Square.TRAP:
                     screen.blit(trap, pos)
+                    diceroll = random.randint(1,4)
+                    blindnessturns = 5
 
                 if (y,x) == playerPos:
                     if playeranim:
@@ -209,7 +213,11 @@ while True:
                 
         
         screen.blit(vignette, (0,0))
+        if(blindnessturns > 0):
+            screen.fill(pygame.Color(100, 0, 0, 255))
+            blindessturns -= 1
         pygame.display.flip()
+
     elif state == 1:
         screen.fill((0, 0, 0))
         screen.blit(splash, (0,0))
