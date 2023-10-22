@@ -206,7 +206,7 @@ while True:
                 doDamageNextturn = True
             elif(diceroll == 3):
                 #terror
-                playsound("/../assets/Scary.mp3")
+                playsound("assets/Scary.mp3")
 
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
