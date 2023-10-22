@@ -81,6 +81,7 @@ playerPos = (1,1)
 newPos = (1,1)
 health = 4
 blindnessturns = 0
+upHealthNextTurn = False
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
@@ -138,32 +139,47 @@ while True:
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            if(upHealthNextTurn):
+                health += 1
+                upHealthNextTurn = False
         if pressed_keys[K_RIGHT] and canMove:
             newPos = (playerPos[0], playerPos[1] + 1)
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            if(upHealthNextTurn):
+                health += 1
+                upHealthNextTurn = False
         if pressed_keys[K_UP] and canMove:
             newPos = (playerPos[0] - 1, playerPos[1])
             timeOfLast = time.time()
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            if(upHealthNextTurn):
+                health += 1
+                upHealthNextTurn = False
         if pressed_keys[K_DOWN] and canMove:
             newPos = (playerPos[0] + 1, playerPos[1])
             timeOfLast = time.time()  
             playeranim = (playeranim == False)
             blindnessturns -= 1
+            if(upHealthNextTurn):
+                health += 1
+                upHealthNextTurn = False
         
 
         if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
             playerPos = newPos
 
         if a[playerPos[0]][playerPos[1]] == Square.LIFE:
-            health += 1
-            # add health
+            upHealthNextTurn = True
         elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
             diceroll = random.randint(1,4)
-            blindnessturns = 5
+            if(diceroll == 1):
+                blindnessturns = 5
+            elif(diceroll == 2):
+                # inv controls
+                pass
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
