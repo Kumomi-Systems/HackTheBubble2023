@@ -147,6 +147,16 @@ while True:
 
     if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
         playerPos = newPos
+
+    if a[playerPos[0]][playerPos[1]] == Square.LIFE:
+        pass
+        # add health
+    elif a[playerPos[0]][playerPos[1]] == Square.TRAP:
+        pass
+        # run trap
+    elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
+        a = GenerateMaze()
+        playerPos = (1,1)
     s = """
     if playeranim != prevplayeranim:
         for enemy in enemies:
