@@ -114,11 +114,11 @@ class Bullet:
     
     def timestep(self, a):
         direction = self.direction
-        if direction == 0:
+        if direction == 1:
             self.coord[1] += 1
-        elif direction == 1:
-            self.coord[0] += 1
         elif direction == 2:
-            self.coord[1] -= 1
+            self.coord[0] += 1
         elif direction == 3:
+            self.coord[1] -= 1
+        elif direction == 4:
             self.coord[0] -= 1

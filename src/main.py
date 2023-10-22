@@ -154,7 +154,8 @@ while True:
         for bullet in bullets:
             bullet.timestep()
             pos = bullet.coord
-            
+            if a[pos[0]][pos[1]]
+
     screen.fill((0, 0, 0))
 
     for y in range(dispH):
