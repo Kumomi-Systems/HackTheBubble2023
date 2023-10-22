@@ -22,3 +22,7 @@ class Node:
 
         else:
             raise Exception("Invalid node-bind direction")
+
+def GenerateMaze():
+    Maze = [[0 for x in range(MAZE_WIDTH)] for y in range(MAZE_HEIGHT)]
+    return Maze
