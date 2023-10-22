@@ -83,6 +83,7 @@ newPos = (1,1)
 health = 4
 blindnessturns = 0
 upHealthNextTurn = False
+doDamageNextTurn = False
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
@@ -143,6 +144,9 @@ while True:
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
+            elif(doDamageNextTurn):
+                health -= 1
+                doDamageNextTurn = False
         if pressed_keys[K_RIGHT] and canMove:
             newPos = (playerPos[0], playerPos[1] + 1)
             timeOfLast = time.time()
@@ -151,6 +155,9 @@ while True:
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
+            elif(doDamageNextTurn):
+                health -= 1
+                doDamageNextTurn = False
         if pressed_keys[K_UP] and canMove:
             newPos = (playerPos[0] - 1, playerPos[1])
             timeOfLast = time.time()
@@ -159,6 +166,9 @@ while True:
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
+            elif(doDamageNextTurn):
+                health -= 1
+                doDamageNextTurn = False
         if pressed_keys[K_DOWN] and canMove:
             newPos = (playerPos[0] + 1, playerPos[1])
             timeOfLast = time.time()  
@@ -167,6 +177,9 @@ while True:
             if(upHealthNextTurn):
                 health += 1
                 upHealthNextTurn = False
+            elif(doDamageNextTurn):
+                health -= 1
+                doDamageNextTurn = False
         
 
         if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.BORDER]:
@@ -181,6 +194,8 @@ while True:
             elif(diceroll == 2):
                 # inv controls
                 pass
+            elif(diceroll == 4):
+                doDamageNextturn = True
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
