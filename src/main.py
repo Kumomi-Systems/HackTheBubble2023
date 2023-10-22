@@ -24,7 +24,7 @@ from pygame.locals import (
 pygame.init()
 
 pixW=640
-pixH=480
+pixH=640
 a = [[0,0,0,0],[1,1,0,0],[0,1,0,0],[1,0,0,0]]
 
 for y in range(len(a)):
@@ -40,22 +40,24 @@ dispW=len(a[0])
 dispH=len(a)
 squareSize=30
 
-screen = pygame.display.set_mode((640, 480))
+screen = pygame.display.set_mode((pixW, pixH))
 pygame.display.set_caption("AMAZEingly Scary Maze")
 
 wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
-player1 = pygame.image.load("assets/Player1_transparent.png").convert_alpha()
-player2 = pygame.image.load("assets/Player2_Transparent.png").convert_alpha()
+player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
+player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
+vignette = pygame.image.load("assets/vignette3.png").convert_alpha()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
 player1 = pygame.transform.scale(player1, (squareSize, squareSize))
 player2 = pygame.transform.scale(player2, (squareSize, squareSize))
+vignette = pygame.transform.scale(vignette, (pixW, pixH))
 playeranim = True
 
 
-playerPos = (0,0)
-newPos = (0,0)
+playerPos = (1,1)
+newPos = (1,1)
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
@@ -113,5 +115,5 @@ while True:
                     screen.blit(player2, pos)
             
     
-    
+    screen.blit(vignette, (0,0))
     pygame.display.flip()
