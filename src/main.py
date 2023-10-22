@@ -1,6 +1,7 @@
 import pygame, sys
 from backend.maze import GenerateMaze
 from backend.backend import Square
+import backend.enemies
 import time
 import random
 
@@ -49,11 +50,13 @@ floor = pygame.image.load("assets/Floor.png").convert()
 player1 = pygame.image.load("assets/Player1New.png").convert_alpha()
 player2 = pygame.image.load("assets/Player2New.png").convert_alpha()
 vignette = pygame.image.load("assets/Vignette.png").convert_alpha()
+karen = pygame.image.load("assets/karen.png").convert()
 wall = pygame.transform.scale(wall, (squareSize, squareSize))
 floor = pygame.transform.scale(floor, (squareSize, squareSize))
 player1 = pygame.transform.scale(player1, (squareSize, squareSize))
 player2 = pygame.transform.scale(player2, (squareSize, squareSize))
 vignette = pygame.transform.scale(vignette, (pixW, pixH))
+karen = pygame.transform.scale(karen, (squareSize, squareSize))
 playeranim = True
 
 
@@ -84,7 +87,7 @@ for i in range(goblincount):
         y = random.randrange(dispH)
         if a[y][x] in [Square.FLOOR, 0]:
             found = True
-    #Make goblin object
+    g =  Goblin([y,x])
     #Add to enemies list
 
 
@@ -155,8 +158,9 @@ while True:
                 else:
                     screen.blit(player2, pos)
             for enemy in enemies:
-                pass
-                #Draw enemy
+
+                pos = enemy.coord
+
             
     
     screen.blit(vignette, (0,0))
