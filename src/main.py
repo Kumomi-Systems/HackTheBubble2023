@@ -47,6 +47,8 @@ squareSize=30
 screen = pygame.display.set_mode((pixW, pixH))
 pygame.display.set_caption("AMAZEingly Scary Maze")
 
+success = pygame.image.load("assets/LeveSuccess.png")
+nextlevel = pygame.image.load("assets/nextLevel.png")
 wall = pygame.image.load("assets/Wall.png").convert()
 floor = pygame.image.load("assets/Floor.png").convert()
 exit = pygame.image.load("assets/Exit.png").convert()
@@ -232,6 +234,13 @@ while True:
             state = 0
         pygame.display.flip()
 
+    elif state == 3:
+        screen.fill(0,0,0)
+        screen.blit(success, (0,0))
+        nextB = Button(nextlevel, (320,500))
+        nextB.update(screen)
+        if nextB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
+            state = 0
 
 '''
 changes made for testing
