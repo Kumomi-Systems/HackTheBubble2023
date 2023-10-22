@@ -122,3 +122,20 @@ class Bullet:
             self.coord[1] -= 1
         elif direction == 4:
             self.coord[0] -= 1
+
+
+class Player:
+    def __init__(self, playerCoord, playerHealth):
+        self.playerCoord = playerCoord
+        self.playerHealth = playerHealth
+
+    #GETTER FOR PLAYER COORDS
+    def get_location(self):
+        return self.playerCoord
+
+    def doDamage(self, damager):
+        #reduces health
+        self.playerHealth-=damager
+    
+    def movePlayer(self,varAxis,changer):
+        if 
