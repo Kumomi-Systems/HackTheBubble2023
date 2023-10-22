@@ -1,7 +1,14 @@
-import enum from Enum
+from enum import Enum
 
-class Direction(Enum);
-    NORTH = 0
-    EAST = 1
-    SOUTH = 2
-    WEST = 3
+class Direction(Enum):
+    NORTH   = 0
+    EAST    = 1
+    SOUTH   = 2
+    WEST    = 3
+
+class Square(Enum):
+    FLOOR   = 0
+    WALL    = 1
+    EXIT    = 2
+    CHEST   = 3
+    TRAP    = 4
