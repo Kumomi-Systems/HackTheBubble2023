@@ -1,5 +1,7 @@
 import sys
 import time
+import random
+from backend import Square
 class Karen:
     isFollowing = False
     def __init__(self, listCoord):
@@ -62,6 +64,7 @@ class Karen:
         """
         if playerCoord == listCoord:
             #go poof
+            pass
         else:
             pass
     
@@ -73,6 +76,7 @@ class Karen:
         
         if playerCoord == listCoord:
             #go poof
+            pass
         else:
             pass
 
@@ -96,23 +100,25 @@ class Goblin:
                 else:
                     direction = 2
             else:
-                direction = randrange(4)
+                direction = random.randrange(4)
             b = Bullet(self.coord, direction)
             bullets.append(b)
             self.lastshot = 0
         self.lastshot += 1
+        return bullets
 
 class Bullet:
     def __init__(self, coord, direction):
         self.coord = coord
         self.direction = direction
     
-    def timestep(self):
+    def timestep(self, a):
+        direction = self.direction
         if direction == 0:
-            coord[1] += 1
+            self.coord[1] += 1
         elif direction == 1:
-            coord[0] += 1
+            self.coord[0] += 1
         elif direction == 2:
-            coord[1] -= 1
+            self.coord[1] -= 1
         elif direction == 3:
-            coord[0] -= 1
+            self.coord[0] -= 1

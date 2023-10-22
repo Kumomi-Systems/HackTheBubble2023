@@ -22,9 +22,15 @@ from pygame.locals import (
     QUIT,
 
 )
-
+s = """
 pygame.init()
-
+songs = ["assets/megalovania.wav", "assets/gamejam.wav", "assets/gamejam1.wav"]
+for i in range(0,2):
+    pygame.mixer.music.load(songs[i])
+pygame.mixer.music.play(0)
+pygame.mixer.music.queue(songs[1])
+pygame.mixer.music.queue(songs[2])
+"""
 pixW=640
 pixH=640
 a = GenerateMaze()
@@ -65,7 +71,7 @@ newPos = (1,1)
 timeOfLast = 0
 timeGap = 0.2
 canMove = True
-
+bullets = []
 enemies = []
 
 karencount = 30
@@ -139,10 +145,15 @@ while True:
     if a[newPos[0]][newPos[1]] not in [Square.WALL, Square.WALL_VISITED, Square.BORDER, 1]:
         playerPos = newPos
 
-    if playeranim == prevplayeranim:
+    if playeranim != prevplayeranim:
         for enemy in enemies:
-            pass    
-    
+            if enemy.name == "G":
+                bullets = enemy.timestep(a, health, playerPos, bullets)    
+            else:
+                enemy.timestep(a, health, playerPos)    
+        for bullet in bullets:
+            bullet.timestep()
+            if bullet 
     screen.fill((0, 0, 0))
 
     for y in range(dispH):
@@ -157,9 +168,16 @@ while True:
                     screen.blit(player1, pos)
                 else:
                     screen.blit(player2, pos)
-            for enemy in enemies:
-
-                pos = enemy.coord
+    for enemy in enemies:
+        pos = enemy.coord
+        x = pos[1]
+        y = pos[0]
+        pos = ((x)*squareSize - (playerPos[1]+ 0.5) *squareSize + pixW/2, (y)*squareSize - (playerPos[0]+ 0.5) *squareSize + pixH/2)
+        if enemy.name == "G":
+            screen.blit(goblin, pos)
+    for bullet in bullets:
+        screen.blit(goblin, pos)
+            
 
             
     
