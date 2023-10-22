@@ -153,7 +153,8 @@ while True:
                 enemy.timestep(a, health, playerPos)    
         for bullet in bullets:
             bullet.timestep()
-            if bullet 
+            pos = bullet.coord
+            
     screen.fill((0, 0, 0))
 
     for y in range(dispH):
