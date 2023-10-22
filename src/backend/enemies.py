@@ -1,10 +1,27 @@
 import sys
 import time
-
 class Karen:
     isFollowing = False
     def __init__(self, listCoord):
         self.listCoord = listCoord
+
+    
+    def checkProximity(self,playerCoord,proximal):
+        '''
+        checks for proximity of player
+        if Karen is within a distance defined by 'proximal' parameter, changes the value of isFollowing to True if not already True
+        #temp - working
+        '''
+
+        if not self.isFollowing:
+            if abs(playerCoord[0]-self.listCoord[0]) <= proximal or abs(playerCoord[1]-self.listCoord[1]):
+                self.isFollowing = True
+        
+        else:
+            pass
+    
+    def shout(self):
+        print(functional.randomAction('Karen_Insults.txt'))
 
     def moveKaren(self,varChange,varAxis):
         """
@@ -34,14 +51,28 @@ class Karen:
             else:
                 print("Invalid axis.")
                 sys.exit(1)
+
+    def karenAction(self, playerCoord, proximal, varChange, varAxis):
+        """
+        check for tile overlap, if yes, destroy and return damage code
+        ->check for movement
+        -> move
+        -> shout 
+        -> check for tile
+        """
+        if playerCoord == listCoord:
+            #go poof
+        else:
+            pass
     
-    def checkProximity(self,playerCoord,proximal):
-        '''
-        checks for proximity of player
-        if Karen is within a distance defined by 'proximal' parameter, changes the value of isFollowing to True if not already True
-        '''
-        if not self.isFollowing:
-            
+        self.checkProximity(playerCoord,listCoord)
+        if isFollowing:
+            self.moveKaren(varChange, varAxis)
+        else: 
+            pass
+        
+        if playerCoord == listCoord:
+            #go poof
         else:
             pass
 
@@ -85,4 +116,3 @@ class Bullet:
             coord[1] -= 1
         elif direction == 3:
             coord[0] -= 1
-
