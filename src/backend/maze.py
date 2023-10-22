@@ -2,8 +2,8 @@ from backend.backend import Square, Direction
 from random import choice as rchoice
 from time import sleep
 
-MAZE_HEIGHT = 15
-MAZE_WIDTH  = 15
+MAZE_HEIGHT = 63
+MAZE_WIDTH  = 63
 COORDDELTAS_CARDINAL = [
     (-1, 0),
     ( 0,-1),
@@ -19,6 +19,7 @@ COORDDELTAS_DIAGONAL = [
 COORDDELTAS_FULL = COORDDELTAS_CARDINAL + COORDDELTAS_DIAGONAL
 
 Maze = [[Square.WALL for x in range(int(MAZE_WIDTH+2))] for y in range(int(MAZE_HEIGHT+2))]
+Points = []
 
 def GenerateMaze():
     Wilson()
@@ -35,22 +36,35 @@ def PopulateMaze():
         Maze[y][0]              = Square.BORDER
         Maze[y][MAZE_WIDTH+1]   = Square.BORDER
 
+def GetPoints():
+    return [(y,x) for x in range(1, MAZE_WIDTH, 2) for y in range(1, MAZE_HEIGHT, 2) if Maze[y][x] == Square.WALL]
+
 def Wilson():
     PopulateMaze()
     exit = (MAZE_HEIGHT, MAZE_WIDTH)
     Maze[1][1] = Square.FLOOR
     ret = 99
     while(ret == 99):
-        ret = RandomWalk(5, 5)
+        ret = RandomWalk(exit[0], exit[1])
     
     if(type(ret) == list):
         for coord in ret:
             Maze[coord[0]][coord[1]] = Square.FLOOR
 
-    points = [(y,x) for x in range(1, MAZE_WIDTH, 2) for y in range(1, MAZE_HEIGHT, 2) if Maze[y][x] == Square.WALL]
-    print(points)
+    Points = GetPoints()
+    while(len(Points) > 0):
+        point = rchoice(Points)
+        ret = 99
+        while(ret == 99):
+            ret = RandomWalk(point[0], point[1])
 
-    Maze[5][5] = Square.EXIT
+        if(type(ret) == list):
+            for coord in ret:
+                Maze[coord[0]][coord[1]] = Square.FLOOR
+        
+        Points = GetPoints()
+
+    Maze[exit[0]][exit[1]] = Square.EXIT
     
 
 def RandomWalk(y, x):

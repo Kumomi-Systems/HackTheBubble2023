@@ -154,7 +154,8 @@ while True:
         for bullet in bullets:
             bullet.timestep()
             pos = bullet.coord
-            if a[pos[0]][pos[1]]
+            if a[pos[0]][pos[1]]:
+                pass
 
     screen.fill((0, 0, 0))
 
