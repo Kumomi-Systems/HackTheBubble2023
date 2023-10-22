@@ -211,7 +211,7 @@ while True:
         elif a[playerPos[0]][playerPos[1]] == Square.EXIT:
             a = GenerateMaze()
             playerPos = (1,1)
-            state = 2
+            state = 3
         s = """
         if playeranim != prevplayeranim:
             for enemy in enemies:
@@ -287,16 +287,19 @@ while True:
         
         if playB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
             state = 0
+            playerPos = (1,1)
         pygame.display.flip()
 
     elif state == 3:
-        screen.fill(0,0,0)
+        screen.fill((0,0,0))
         screen.blit(success, (0,0))
         nextB = Button(nextlevel, (320,500))
         nextB.update(screen)
         if nextB.checkForInput( pygame.mouse.get_pos()) and  pygame.mouse.get_pressed()[0] == True:
             state = 0
+            playerPos = (1,1)
         pygame.display.flip()
+        
 
 '''
 changes made for testing
