@@ -7,8 +7,9 @@ class Direction(Enum):
     WEST    = 3
 
 class Square(Enum):
-    FLOOR   = 0
-    WALL    = 1
-    EXIT    = 2
-    CHEST   = 3
-    TRAP    = 4
+    FLOOR       = 0
+    WALL        = 1
+    WALL_VISTED = 2
+    EXIT        = 10
+    CHEST       = 20
+    TRAP        = 30
